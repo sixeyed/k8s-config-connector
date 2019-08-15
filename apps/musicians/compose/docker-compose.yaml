@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+
+  mysql:
+    image: mysql:5.6
+    environment:
+      - MYSQL_ROOT_PASSWORD=DockerCon!!!
+    volumes:
+      - mysqldata:/var/lib/mysql
+    networks:
+      - musicians-net
+
+  web: 
+    image: gcr.io/rleidle-200200/user:90a7b1d    
+    ports:
+      - "8080:8080"
+    environment:    
+      - DB_HOST=mysql:3306
+      - DB_USER=root
+      - DB_PASSWORD=DockerCon!!!
+      - DB_DBNAME=musicians
+    depends_on:
+      - mysql
+    networks:
+      - musicians-net
+
+networks:
+  musicians-net:
+
+volumes:
+  mysqldata:
